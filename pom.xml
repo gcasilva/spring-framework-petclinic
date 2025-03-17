@@ -67,6 +67,7 @@
         <!-- JDBC Drivers -->
         <mysql-driver.version>8.1.0</mysql-driver.version>
         <postgresql-driver.version>42.7.3</postgresql-driver.version>
+        <mssql-driver.version>12.8.1.jre11</mssql-driver.version>
 
         <!-- Others -->
         <jackson.version>2.18.2</jackson.version>
@@ -591,6 +592,25 @@
                     <groupId>org.postgresql</groupId>
                     <artifactId>postgresql</artifactId>
                     <version>${postgresql-driver.version}</version>
+                    <scope>runtime</scope>
+                </dependency>
+            </dependencies>
+        </profile>
+        <profile>
+            <id>MSSQL</id>
+            <properties>
+                <db.script>mssql</db.script>
+                <jpa.database>SQL_SERVER</jpa.database>
+                <jdbc.driverClassName>com.microsoft.sqlserver.jdbc.SQLServerDriver</jdbc.driverClassName>
+                <jdbc.url>${env.MSSQL_URL:jdbc:sqlserver://localhost:1433;databaseName=petclinic;encrypt=false}</jdbc.url>
+                <jdbc.username>${env.MSSQL_USERNAME:sa}</jdbc.username>
+                <jdbc.password>${env.MSSQL_PASSWORD:YourStrong@Passw0rd}</jdbc.password>
+            </properties>
+            <dependencies>
+                <dependency>
+                    <groupId>com.microsoft.sqlserver</groupId>
+                    <artifactId>mssql-jdbc</artifactId>
+                    <version>${mssql-driver.version}</version>
                     <scope>runtime</scope>
                 </dependency>
             </dependencies>

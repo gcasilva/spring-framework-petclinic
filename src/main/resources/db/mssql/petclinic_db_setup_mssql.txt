@@ -1,0 +1,57 @@
+# Setting up Microsoft SQL Server for Spring PetClinic Application
+
+## Using Docker (Recommended)
+
+1. Start SQL Server using Docker:
+```
+docker run -e "ACCEPT_EULA=Y" -e "SA_PASSWORD=YourStrong@Passw0rd" -p 1433:1433 -d mcr.microsoft.com/mssql/server:2019-latest
+```
+
+2. Create the petclinic database:
+```
+docker exec -it <container_id> /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P YourStrong@Passw0rd -Q "CREATE DATABASE petclinic"
+```
+
+## Manual Setup
+
+1. Install Microsoft SQL Server (Express or Developer edition)
+2. Create a new database named 'petclinic'
+3. Make sure the SQL Server authentication is enabled and the 'sa' account is active
+
+## Running the Application with SQL Server
+
+### Using Environment Variables (Recommended)
+
+You can set the following environment variables to configure the database connection:
+
+```
+export MSSQL_URL=jdbc:sqlserver://your-server:1433;databaseName=petclinic;encrypt=false
+export MSSQL_USERNAME=your-username
+export MSSQL_PASSWORD=your-password
+```
+
+On Windows:
+```
+set MSSQL_URL=jdbc:sqlserver://your-server:1433;databaseName=petclinic;encrypt=false
+set MSSQL_USERNAME=your-username
+set MSSQL_PASSWORD=your-password
+```
+
+If you don't set these environment variables, the application will use the default values:
+- URL: jdbc:sqlserver://localhost:1433;databaseName=petclinic;encrypt=false
+- Username: sa
+- Password: YourStrong@Passw0rd
+
+### Running with Maven
+
+To run the application with SQL Server, use the following Maven command:
+
+```
+./mvnw tomcat7:run -P MSSQL
+```
+
+Or with the Maven wrapper on Windows:
+
+```
+mvnw.cmd tomcat7:run -P MSSQL
+```
