@@ -9,7 +9,7 @@
     
     <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
-            <pattern>%-5level %logger{0} - %msg%n</pattern>
+            <pattern>trace_id=%mdc{trace_id} span_id=%mdc{span_id} trace_flags=%mdc{trace_flags} %5p - %m%n</pattern>
         </encoder>
     </appender>
 
